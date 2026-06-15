@@ -1,0 +1,30 @@
+{% if current_user.is_authenticated %}
+    {% if user_review %}
+        <div class="alert alert-info">
+            Вы уже оставили отзыв к этому курсу:
+            <strong>{{ user_review.rating }}/5</strong> — {{ user_review.text }}
+        </div>
+    {% else %}
+        <form method="post" action="{{ url_for('courses.create_review', course_id=course.id) }}" class="card card-body mb-4">
+            <h5 class="mb-3">Оставить отзыв</h5>
+            <div class="mb-3">
+                <label class="form-label" for="rating">Оценка</label>
+                <select class="form-select" name="rating" id="rating">
+                    <option value="5" selected>отлично</option>
+                    <option value="4">хорошо</option>
+                    <option value="3">удовлетворительно</option>
+                    <option value="2">неудовлетворительно</option>
+                    <option value="1">плохо</option>
+                    <option value="0">ужасно</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="review-text">Текст отзыва</label>
+                <textarea class="form-control" name="text" id="review-text" rows="4" required></textarea>
+            </div>
+            <button class="btn btn-dark">Отправить отзыв</button>
+        </form>
+    {% endif %}
+{% else %}
+    <div class="alert alert-secondary">Чтобы оставить отзыв, войдите в систему.</div>
+{% endif %}

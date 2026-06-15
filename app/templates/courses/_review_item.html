@@ -1,0 +1,10 @@
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+            <strong>{{ review.user.full_name }}</strong>
+            <span class="badge bg-dark">Оценка: {{ review.rating }}/5</span>
+        </div>
+        <div class="text-muted small mb-2">{{ review.created_at.strftime('%d.%m.%Y %H:%M') }}</div>
+        <p class="mb-0">{{ review.text }}</p>
+    </div>
+</div>

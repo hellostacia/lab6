@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% from 'pagination.html' import render_pagination %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Отзывы о курсе «{{ course.name }}»</h1>
+
+    <form class="row g-3 align-items-end mb-4" method="get">
+        <div class="col-md-6">
+            <label class="form-label" for="sort">Сортировка</label>
+            <select class="form-select" name="sort" id="sort">
+                <option value="new" {% if sort == 'new' %}selected{% endif %}>по новизне</option>
+                <option value="positive" {% if sort == 'positive' %}selected{% endif %}>сначала положительные</option>
+                <option value="negative" {% if sort == 'negative' %}selected{% endif %}>сначала отрицательные</option>
+            </select>
+        </div>
+        <div class="col-md-3"><button class="btn btn-dark w-100">Применить</button></div>
+    </form>
+
+    {% include 'courses/_review_form.html' %}
+
+    {% if reviews %}
+        {% for review in reviews %}
+            {% include 'courses/_review_item.html' %}
+        {% endfor %}
+        {{ render_pagination(pagination, request.endpoint, {'course_id': course.id, 'sort': sort}) }}
+    {% else %}
+        <p class="text-muted">Отзывов пока нет.</p>
+    {% endif %}
+
+    <a class="btn btn-outline-secondary mt-3" href="{{ url_for('courses.show', course_id=course.id) }}">Назад к курсу</a>
+</div>
+{% endblock %}
